@@ -4,10 +4,11 @@ import { Navigate } from "react-router-dom";
 import AuthenticatedRoute from "@/components/auth/AuthenticatedRoute";
 import UserRoleDashboard from "@/components/dashboard/UserRoleDashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useDummyAuth } from "@/hooks/useDummyAuth";
+import { useDummyAuth, DummyUser } from "@/hooks/useDummyAuth";
 import { dashboardData } from "@/data/dummyAuthData";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import { UserResource } from "@clerk/types";
 
 const Dashboard = () => {
   const clerkAuth = useUser();
@@ -24,15 +25,24 @@ const Dashboard = () => {
     return <Navigate to="/login" />;
   }
 
-  // Extract roles from user metadata
-  const userRoles = isDummyAuth
-    ? user.publicMetadata.roles
-    : (clerkAuth.user?.publicMetadata?.roles as string[]) || [];
+  // Extract roles from user metadata and handle type safety
+  let userRoles: string[] = [];
+  
+  if (isDummyAuth && dummyAuth.user) {
+    userRoles = dummyAuth.user.publicMetadata.roles;
+  } else if (clerkAuth.user?.publicMetadata) {
+    userRoles = (clerkAuth.user.publicMetadata.roles as string[]) || [];
+  }
   
   // Default to "user" role if no roles are set
   if (userRoles.length === 0) {
     userRoles.push("user");
   }
+
+  // Get the appropriate user name based on auth method
+  const userName = isDummyAuth && dummyAuth.user 
+    ? dummyAuth.user.username 
+    : clerkAuth.user?.firstName || "User";
 
   return (
     <AuthenticatedRoute>
@@ -40,7 +50,7 @@ const Dashboard = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold">
-              Welcome, {isDummyAuth ? user.username : (user.firstName || "User")}
+              Welcome, {userName}
             </h1>
             <p className="text-muted-foreground">
               Current role(s): {userRoles.join(", ")}

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface DummyUser {
+export interface DummyUser {
   username: string;
   role: string;
   mfaEnabled: boolean;
