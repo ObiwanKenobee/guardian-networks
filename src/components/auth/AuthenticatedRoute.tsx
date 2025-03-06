@@ -2,6 +2,7 @@
 import { useUser } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useDummyAuth } from "@/hooks/useDummyAuth";
 
 export interface AuthenticatedRouteProps {
   children: React.ReactNode;
@@ -12,10 +13,19 @@ const AuthenticatedRoute = ({
   children, 
   allowedRoles = [] 
 }: AuthenticatedRouteProps) => {
-  const { isSignedIn, user, isLoaded } = useUser();
+  const clerkAuth = useUser();
+  const dummyAuth = useDummyAuth();
   const { toast } = useToast();
   
-  // Wait for Clerk to load user data
+  // Determine if we're using dummy auth or clerk auth
+  const isDummyAuth = !!dummyAuth.user;
+  
+  // Combined auth state
+  const isSignedIn = isDummyAuth ? dummyAuth.isSignedIn : clerkAuth.isSignedIn;
+  const isLoaded = isDummyAuth ? dummyAuth.isLoaded : clerkAuth.isLoaded;
+  const user = isDummyAuth ? dummyAuth.user : clerkAuth.user;
+  
+  // Wait for auth system to load user data
   if (!isLoaded) {
     return <div className="h-screen w-full flex items-center justify-center">Loading...</div>;
   }
@@ -34,7 +44,9 @@ const AuthenticatedRoute = ({
   // Check role-based access if roles are specified
   if (allowedRoles.length > 0) {
     // Get user roles from metadata
-    const userRoles = user.publicMetadata.roles as string[] || [];
+    const userRoles = isDummyAuth
+      ? user.publicMetadata.roles
+      : clerkAuth.user?.publicMetadata.roles as string[] || [];
     
     // Check if user has at least one of the allowed roles
     const hasPermission = allowedRoles.some(role => userRoles.includes(role));

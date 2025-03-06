@@ -1,23 +1,83 @@
 
-import { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser, SignIn } from "@clerk/clerk-react";
+import { SignIn, useAuth } from "@clerk/clerk-react";
 import { useToast } from "@/hooks/use-toast";
+import { dummyUsers } from "@/data/dummyAuthData";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Login = () => {
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showDummyLogin, setShowDummyLogin] = useState(false);
 
-  useEffect(() => {
-    if (isSignedIn) {
+  // Handle dummy login
+  const handleDummyLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const user = dummyUsers.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+      // Store the user info in localStorage to simulate being logged in
+      localStorage.setItem("dummyUser", JSON.stringify(user));
+      
+      // Show success toast
       toast({
-        title: "Already signed in",
-        description: "Redirecting to dashboard",
+        title: "Login Successful",
+        description: `Welcome back, ${user.username}! Role: ${user.role}`,
       });
-      navigate("/dashboard");
+      
+      // Redirect based on role
+      switch (user.role) {
+        case "SuperAdmin":
+          navigate("/dashboard");
+          break;
+        case "Supplier":
+          navigate("/dashboard");
+          break;
+        case "NGO":
+          navigate("/dashboard");
+          break;
+        case "LocalDistributor":
+          if (user.geoFence) {
+            // In a real app, we would check actual geolocation
+            toast({
+              description: `Geo-fence detected: ${user.geoFence}`,
+            });
+          }
+          navigate("/dashboard");
+          break;
+        case "Government":
+          navigate("/dashboard");
+          break;
+        default:
+          navigate("/dashboard");
+      }
+    } else {
+      // Show error toast
+      toast({
+        title: "Login Failed",
+        description: "Invalid username or password",
+        variant: "destructive",
+      });
     }
-  }, [isSignedIn, navigate, toast]);
+  };
+
+  // If already signed in (with Clerk), redirect to dashboard
+  if (isSignedIn) {
+    toast({
+      title: "Already signed in",
+      description: "Redirecting to dashboard",
+    });
+    navigate("/dashboard");
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20">
@@ -33,12 +93,72 @@ const Login = () => {
           <p className="mt-2 text-muted-foreground">Sign in to access your secure Guardian-IO account</p>
         </div>
         
-        <SignIn
-          path="/login"
-          routing="path"
-          signUpUrl="/signup"
-          redirectUrl="/dashboard"
-        />
+        {/* Toggle between real and dummy auth */}
+        <div className="flex justify-center mb-4">
+          <Button 
+            variant="outline"
+            onClick={() => setShowDummyLogin(!showDummyLogin)}
+            className="w-full"
+          >
+            {showDummyLogin ? "Use Clerk Authentication" : "Use Dummy Authentication"}
+          </Button>
+        </div>
+        
+        {showDummyLogin ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>Dummy Authentication</CardTitle>
+              <CardDescription>Use test credentials for different roles</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleDummyLogin}>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input 
+                      id="username"
+                      type="text" 
+                      placeholder="e.g., admin_guardian, business_alpha"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input 
+                      id="password"
+                      type="password" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <Button type="submit" className="w-full mt-4">Sign In</Button>
+              </form>
+            </CardContent>
+            <CardFooter>
+              <div className="text-sm text-muted-foreground mt-4 w-full">
+                <p>Available test accounts:</p>
+                <ul className="mt-2 list-disc pl-5 text-xs">
+                  <li>Admin: admin_guardian</li>
+                  <li>Business: business_alpha</li>
+                  <li>NGO: ngo_wfp</li>
+                  <li>Distributor: driver_john</li>
+                  <li>Government: gov_inspector</li>
+                </ul>
+              </div>
+            </CardFooter>
+          </Card>
+        ) : (
+          <SignIn
+            path="/login"
+            routing="path"
+            signUpUrl="/signup"
+            redirectUrl="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

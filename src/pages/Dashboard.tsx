@@ -4,16 +4,30 @@ import { Navigate } from "react-router-dom";
 import AuthenticatedRoute from "@/components/auth/AuthenticatedRoute";
 import UserRoleDashboard from "@/components/dashboard/UserRoleDashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDummyAuth } from "@/hooks/useDummyAuth";
+import { dashboardData } from "@/data/dummyAuthData";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 
 const Dashboard = () => {
-  const { isSignedIn, user } = useUser();
+  const clerkAuth = useUser();
+  const dummyAuth = useDummyAuth();
+  
+  // Determine if we're using dummy auth or clerk auth
+  const isDummyAuth = !!dummyAuth.user;
+  
+  // Combined auth state
+  const isSignedIn = isDummyAuth ? dummyAuth.isSignedIn : clerkAuth.isSignedIn;
+  const user = isDummyAuth ? dummyAuth.user : clerkAuth.user;
 
   if (!isSignedIn) {
     return <Navigate to="/login" />;
   }
 
   // Extract roles from user metadata
-  const userRoles = (user?.publicMetadata?.roles as string[]) || [];
+  const userRoles = isDummyAuth
+    ? user.publicMetadata.roles
+    : (clerkAuth.user?.publicMetadata?.roles as string[]) || [];
   
   // Default to "user" role if no roles are set
   if (userRoles.length === 0) {
@@ -25,10 +39,22 @@ const Dashboard = () => {
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold">Welcome, {user.firstName || "User"}</h1>
+            <h1 className="text-3xl font-bold">
+              Welcome, {isDummyAuth ? user.username : (user.firstName || "User")}
+            </h1>
             <p className="text-muted-foreground">
               Current role(s): {userRoles.join(", ")}
             </p>
+            
+            {isDummyAuth && (
+              <Alert className="mt-4">
+                <Info className="h-4 w-4" />
+                <AlertTitle>Dummy Authentication Active</AlertTitle>
+                <AlertDescription>
+                  You are currently using the dummy authentication system with test data.
+                </AlertDescription>
+              </Alert>
+            )}
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
@@ -52,36 +78,36 @@ const Dashboard = () => {
             </TabsList>
             
             <TabsContent value="overview" className="p-6 bg-white rounded-lg shadow">
-              <UserRoleDashboard role="user" />
+              <UserRoleDashboard role="user" data={null} />
             </TabsContent>
             
             {userRoles.includes("admin") && (
               <TabsContent value="admin" className="p-6 bg-white rounded-lg shadow">
-                <UserRoleDashboard role="admin" />
+                <UserRoleDashboard role="admin" data={dashboardData.adminDashboard} />
               </TabsContent>
             )}
             
             {userRoles.includes("business") && (
               <TabsContent value="business" className="p-6 bg-white rounded-lg shadow">
-                <UserRoleDashboard role="business" />
+                <UserRoleDashboard role="business" data={dashboardData.businessDashboard} />
               </TabsContent>
             )}
             
             {userRoles.includes("ngo") && (
               <TabsContent value="ngo" className="p-6 bg-white rounded-lg shadow">
-                <UserRoleDashboard role="ngo" />
+                <UserRoleDashboard role="ngo" data={dashboardData.ngoDashboard} />
               </TabsContent>
             )}
             
             {userRoles.includes("distributor") && (
               <TabsContent value="distributor" className="p-6 bg-white rounded-lg shadow">
-                <UserRoleDashboard role="distributor" />
+                <UserRoleDashboard role="distributor" data={dashboardData.distributorDashboard} />
               </TabsContent>
             )}
             
             {userRoles.includes("government") && (
               <TabsContent value="government" className="p-6 bg-white rounded-lg shadow">
-                <UserRoleDashboard role="government" />
+                <UserRoleDashboard role="government" data={dashboardData.governmentDashboard} />
               </TabsContent>
             )}
           </Tabs>
