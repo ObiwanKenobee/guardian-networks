@@ -6,8 +6,9 @@ import {
   Brain, 
   LayoutGrid, 
   Link, 
-  Drone, 
-  Store 
+  Plane, 
+  Store,
+  Shield 
 } from 'lucide-react';
 
 const Features = () => {
@@ -85,7 +86,7 @@ const Features = () => {
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '300ms' }}>
             <FeatureCard
-              icon={<Drone className="h-6 w-6" />}
+              icon={<Plane className="h-6 w-6" />}
               title="Autonomous & Alternative Delivery"
               description="Drone-powered networks enable rapid transport while AI-coordinated self-driving convoys dynamically reroute in real time."
             />

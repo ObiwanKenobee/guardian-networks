@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import GlassCard from './ui-custom/GlassCard';
 import Pill from './ui-custom/Pill';
-import { Check, Building, Heart, ShoppingBag, Government } from 'lucide-react';
+import { Check, Building, Heart, ShoppingBag, Landmark } from 'lucide-react';
 
 const TargetUsers = () => {
   const usersRef = useRef<HTMLDivElement>(null);
@@ -135,7 +135,7 @@ const TargetUsers = () => {
             <GlassCard className="h-full" hoverEffect>
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-primary/10">
-                  <Government className="h-6 w-6 text-primary" />
+                  <Landmark className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">For Governments</h3>
