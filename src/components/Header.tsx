@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import UserButton from './auth/UserButton';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,12 +27,12 @@ const Header = () => {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
           <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-white font-bold text-xl">G</span>
           </div>
           <span className="font-bold text-xl">Guardian-IO</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -46,7 +48,10 @@ const Header = () => {
           <a href="#vision" className="text-foreground/80 hover:text-foreground transition-colors">
             Vision
           </a>
-          <Button>Get Started</Button>
+          <Link to="/dashboard">
+            <Button variant="outline">Dashboard</Button>
+          </Link>
+          <UserButton />
         </nav>
 
         {/* Mobile Menu Button */}
@@ -95,7 +100,16 @@ const Header = () => {
           >
             Vision
           </a>
-          <Button size="lg" className="w-full mt-4">Get Started</Button>
+          <Link 
+            to="/dashboard" 
+            className="text-foreground text-lg"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Dashboard
+          </Link>
+          <div className="pt-4">
+            <UserButton />
+          </div>
         </nav>
       </div>
     </header>
