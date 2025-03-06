@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const Login = () => {
   const { isSignedIn } = useAuth();
@@ -16,6 +17,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showDummyLogin, setShowDummyLogin] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
 
   // Handle dummy login
   const handleDummyLogin = (e: React.FormEvent) => {
@@ -67,6 +69,12 @@ const Login = () => {
         variant: "destructive",
       });
     }
+  };
+
+  // Populate credentials
+  const populateCredentials = (username: string, password: string) => {
+    setUsername(username);
+    setPassword(password);
   };
 
   // If already signed in (with Clerk), redirect to dashboard
@@ -138,17 +146,48 @@ const Login = () => {
                 <Button type="submit" className="w-full mt-4">Sign In</Button>
               </form>
             </CardContent>
-            <CardFooter>
-              <div className="text-sm text-muted-foreground mt-4 w-full">
-                <p>Available test accounts:</p>
-                <ul className="mt-2 list-disc pl-5 text-xs">
-                  <li>Admin: admin_guardian</li>
-                  <li>Business: business_alpha</li>
-                  <li>NGO: ngo_wfp</li>
-                  <li>Distributor: driver_john</li>
-                  <li>Government: gov_inspector</li>
-                </ul>
-              </div>
+            <CardFooter className="flex flex-col items-start">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setShowCredentials(!showCredentials)}
+                className="text-sm text-muted-foreground mb-2"
+              >
+                {showCredentials ? "Hide Credentials" : "Show Available Test Accounts"}
+              </Button>
+              
+              {showCredentials && (
+                <div className="w-full overflow-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Role</TableHead>
+                        <TableHead>Username</TableHead>
+                        <TableHead>Password</TableHead>
+                        <TableHead></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {dummyUsers.map((user) => (
+                        <TableRow key={user.username}>
+                          <TableCell className="font-medium">{user.role}</TableCell>
+                          <TableCell>{user.username}</TableCell>
+                          <TableCell>{user.password}</TableCell>
+                          <TableCell>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => populateCredentials(user.username, user.password)}
+                            >
+                              Use
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
             </CardFooter>
           </Card>
         ) : (
