@@ -31,8 +31,8 @@ const Login = () => {
       
       // Show success toast
       toast({
-        title: "Login Successful",
-        description: `Welcome back, ${user.username}! Role: ${user.role}`,
+        title: "Welcome to the community",
+        description: `Hello, ${user.username}! Role: ${user.role}`,
       });
       
       // Redirect based on role
@@ -50,7 +50,7 @@ const Login = () => {
           if (user.geoFence) {
             // In a real app, we would check actual geolocation
             toast({
-              description: `Geo-fence detected: ${user.geoFence}`,
+              description: `Local region recognized: ${user.geoFence}`,
             });
           }
           navigate("/dashboard");
@@ -64,8 +64,8 @@ const Login = () => {
     } else {
       // Show error toast
       toast({
-        title: "Login Failed",
-        description: "Invalid username or password",
+        title: "Access not recognized",
+        description: "Please check your credentials and try again",
         variant: "destructive",
       });
     }
@@ -80,8 +80,8 @@ const Login = () => {
   // If already signed in (with Clerk), redirect to dashboard
   if (isSignedIn) {
     toast({
-      title: "Already signed in",
-      description: "Redirecting to dashboard",
+      title: "Already connected",
+      description: "Taking you to your community dashboard",
     });
     navigate("/dashboard");
     return null;
@@ -97,8 +97,8 @@ const Login = () => {
             </div>
             <span className="font-bold text-xl ml-2">Guardian-IO</span>
           </div>
-          <h1 className="mt-6 text-2xl font-bold">Welcome Back</h1>
-          <p className="mt-2 text-muted-foreground">Sign in to access your secure Guardian-IO account</p>
+          <h1 className="mt-6 text-2xl font-bold">Join Our Community</h1>
+          <p className="mt-2 text-muted-foreground">Connect to access your Guardian-IO community network</p>
         </div>
         
         {/* Toggle between real and dummy auth */}
@@ -108,15 +108,15 @@ const Login = () => {
             onClick={() => setShowDummyLogin(!showDummyLogin)}
             className="w-full"
           >
-            {showDummyLogin ? "Use Clerk Authentication" : "Use Dummy Authentication"}
+            {showDummyLogin ? "Use Standard Connection" : "Use Community Access Profiles"}
           </Button>
         </div>
         
         {showDummyLogin ? (
           <Card>
             <CardHeader>
-              <CardTitle>Dummy Authentication</CardTitle>
-              <CardDescription>Use test credentials for different roles</CardDescription>
+              <CardTitle>Community Access</CardTitle>
+              <CardDescription>Use test credentials for different community roles</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleDummyLogin}>
@@ -126,14 +126,14 @@ const Login = () => {
                     <Input 
                       id="username"
                       type="text" 
-                      placeholder="e.g., admin_guardian, business_alpha"
+                      placeholder="Your community identifier"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Access Key</Label>
                     <Input 
                       id="password"
                       type="password" 
@@ -143,7 +143,7 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                <Button type="submit" className="w-full mt-4">Sign In</Button>
+                <Button type="submit" className="w-full mt-4">Connect</Button>
               </form>
             </CardContent>
             <CardFooter className="flex flex-col items-start">
@@ -153,7 +153,7 @@ const Login = () => {
                 onClick={() => setShowCredentials(!showCredentials)}
                 className="text-sm text-muted-foreground mb-2"
               >
-                {showCredentials ? "Hide Credentials" : "Show Available Test Accounts"}
+                {showCredentials ? "Hide Access Details" : "Show Community Access Profiles"}
               </Button>
               
               {showCredentials && (
@@ -163,7 +163,7 @@ const Login = () => {
                       <TableRow>
                         <TableHead>Role</TableHead>
                         <TableHead>Username</TableHead>
-                        <TableHead>Password</TableHead>
+                        <TableHead>Access Key</TableHead>
                         <TableHead></TableHead>
                       </TableRow>
                     </TableHeader>

@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import GlassCard from './ui-custom/GlassCard';
 import Pill from './ui-custom/Pill';
-import { Check, Building, Heart, ShoppingBag, Landmark } from 'lucide-react';
+import { Check, Users, Globe, Sparkles, Leaf } from 'lucide-react';
 
 const TargetUsers = () => {
   const usersRef = useRef<HTMLDivElement>(null);
@@ -39,13 +39,13 @@ const TargetUsers = () => {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <Pill className="mb-4">Target Users & Benefits</Pill>
+          <Pill className="mb-4">Community Participants</Pill>
           <h2 className="section-title mb-4">
-            Who Benefits from Guardian-IO
+            Who Contributes to Our Shared Vision
           </h2>
           <p className="section-subtitle max-w-2xl mx-auto">
-            Our platform serves diverse stakeholders in the crisis management ecosystem, 
-            providing tailored solutions for each group's unique challenges.
+            Guardian-IO brings together diverse stakeholders in a cooperative network focused 
+            on creating abundance and mutual flourishing rather than competition.
           </p>
         </div>
 
@@ -54,22 +54,22 @@ const TargetUsers = () => {
             <GlassCard className="h-full" hoverEffect>
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-primary/10">
-                  <Building className="h-6 w-6 text-primary" />
+                  <Users className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">For Businesses</h3>
+                  <h3 className="text-xl font-semibold mb-3">Local Communities</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Secure and risk-free resource distribution to crisis zones</span>
+                      <span>Democratic governance over local resource flows</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Prevent corruption and ensure supply chain integrity</span>
+                      <span>Self-determination of needs and contributions</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Reduce operational risks in unstable regions</span>
+                      <span>Cultural autonomy with global solidarity</span>
                     </li>
                   </ul>
                 </div>
@@ -81,22 +81,22 @@ const TargetUsers = () => {
             <GlassCard className="h-full" hoverEffect>
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-primary/10">
-                  <Heart className="h-6 w-6 text-primary" />
+                  <Globe className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">For NGOs</h3>
+                  <h3 className="text-xl font-semibold mb-3">Global Coordination Networks</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Verifiable humanitarian aid deliveries with real-time tracking</span>
+                      <span>Facilitation of resource-sharing across regions</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Enhanced transparency and accountability to donors</span>
+                      <span>Transparent tracking of global flows and needs</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Improved efficiency in resource allocation</span>
+                      <span>Cross-cultural cooperation and knowledge sharing</span>
                     </li>
                   </ul>
                 </div>
@@ -108,22 +108,22 @@ const TargetUsers = () => {
             <GlassCard className="h-full" hoverEffect>
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-primary/10">
-                  <ShoppingBag className="h-6 w-6 text-primary" />
+                  <Sparkles className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">For Local Suppliers</h3>
+                  <h3 className="text-xl font-semibold mb-3">Knowledge Commoners</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Safe access to a global network of partners</span>
+                      <span>Open-source innovation and technology sharing</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Guaranteed fair trade and payment practices</span>
+                      <span>Democratic development of collective intelligence</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Integration into sophisticated supply chain systems</span>
+                      <span>Bridging traditional and cutting-edge wisdom</span>
                     </li>
                   </ul>
                 </div>
@@ -135,22 +135,22 @@ const TargetUsers = () => {
             <GlassCard className="h-full" hoverEffect>
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-primary/10">
-                  <Landmark className="h-6 w-6 text-primary" />
+                  <Leaf className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">For Governments</h3>
+                  <h3 className="text-xl font-semibold mb-3">Ecological Stewards</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Predictive intelligence for resource planning</span>
+                      <span>Integration of human systems with natural cycles</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Crisis response tools for effective emergency management</span>
+                      <span>Regenerative resource management protocols</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Enhanced coordination with international aid organizations</span>
+                      <span>Guardianship of biodiversity and ecosystems</span>
                     </li>
                   </ul>
                 </div>

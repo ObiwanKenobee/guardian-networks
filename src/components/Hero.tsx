@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import Pill from './ui-custom/Pill';
-import { ArrowRight, Shield, Zap } from 'lucide-react';
+import { ArrowRight, Sun, Heart, Globe } from 'lucide-react';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -51,42 +51,40 @@ const Hero = () => {
       
       {/* Content */}
       <div className="container relative z-10 mx-auto px-4 py-20 md:py-32 flex flex-col items-center text-center">
-        <Pill className="mb-6 animate-fade-in">Revolutionizing Crisis Supply Chains</Pill>
+        <Pill className="mb-6 animate-fade-in">Building a Future of Abundance</Pill>
         
         <h1 className="headline max-w-4xl mb-6 animate-slide-up">
-          Decentralized AI-Driven Supply Chain
-          <span className="text-primary"> For Crisis Zones</span>
+          A World Beyond Scarcity
+          <span className="text-primary"> Through Universal Cooperation</span>
         </h1>
         
         <p className="subheadline max-w-2xl mb-12 animate-slide-up" style={{ animationDelay: '100ms' }}>
-          Secure, resilient, and transparent resource distribution in war zones, 
-          disaster-stricken regions, and politically unstable areas.
+          Guardian-IO enables seamless resource sharing between communities, 
+          transcending artificial boundaries to create networks of mutual support and prosperity.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 mb-16 animate-slide-up" style={{ animationDelay: '200ms' }}>
           <Button size="lg" className="group">
-            Get Started
+            Join the Movement
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button size="lg" variant="outline">
-            Learn More
+            Explore Our Vision
           </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl animate-slide-up" style={{ animationDelay: '300ms' }}>
           <div className="flex items-center justify-center p-6 bg-white/50 backdrop-blur-sm rounded-lg shadow-sm">
-            <Shield className="text-primary mr-3 h-5 w-5" />
-            <span className="font-medium">Blockchain Security</span>
+            <Sun className="text-primary mr-3 h-5 w-5" />
+            <span className="font-medium">Transparent Networks</span>
           </div>
           <div className="flex items-center justify-center p-6 bg-white/50 backdrop-blur-sm rounded-lg shadow-sm">
-            <Zap className="text-primary mr-3 h-5 w-5" />
-            <span className="font-medium">AI-Powered Logistics</span>
+            <Heart className="text-primary mr-3 h-5 w-5" />
+            <span className="font-medium">Universal Access</span>
           </div>
           <div className="flex items-center justify-center p-6 bg-white/50 backdrop-blur-sm rounded-lg shadow-sm">
-            <svg className="text-primary mr-3 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
-            <span className="font-medium">Decentralized Network</span>
+            <Globe className="text-primary mr-3 h-5 w-5" />
+            <span className="font-medium">Borderless Cooperation</span>
           </div>
         </div>
       </div>

@@ -3,12 +3,12 @@ import React, { useRef, useEffect } from 'react';
 import FeatureCard from './ui-custom/FeatureCard';
 import Pill from './ui-custom/Pill';
 import { 
-  Brain, 
-  LayoutGrid, 
-  Link, 
-  Plane, 
-  Store,
-  Shield 
+  Sun,
+  Heart, 
+  Globe, 
+  Sparkles,
+  Leaf,
+  Users
 } from 'lucide-react';
 
 const Features = () => {
@@ -49,62 +49,62 @@ const Features = () => {
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <Pill className="mb-4">Key Features</Pill>
+          <Pill className="mb-4">Core Principles</Pill>
           <h2 className="section-title mb-4">
-            Redefining Supply Chain Resilience
+            Building Utopian Resource Networks
           </h2>
           <p className="section-subtitle max-w-2xl mx-auto">
-            Our integrated approach combines cutting-edge technologies to ensure secure and 
-            efficient resource distribution in the most challenging environments.
+            Our platform transcends traditional economic structures to create a new paradigm of 
+            resource sharing and cooperation for a world of abundance.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="feature-card opacity-0" style={{ transitionDelay: '0ms' }}>
             <FeatureCard
-              icon={<Brain className="h-6 w-6" />}
-              title="AI-Powered Crisis Supply Intelligence"
-              description="Predicts shortages and supply chain disruptions in real time while identifying optimal supply routes in conflict zones."
+              icon={<Sun className="h-6 w-6" />}
+              title="Collective Intelligence Networks"
+              description="Community-guided algorithms that create optimal resource allocation by connecting human needs with available resources."
             />
           </div>
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '100ms' }}>
             <FeatureCard
-              icon={<LayoutGrid className="h-6 w-6" />}
-              title="Decentralized Micro-Distribution Hubs"
-              description="Eliminates reliance on vulnerable warehouse locations with mobile, solar-powered supply stations that shift dynamically."
+              icon={<Heart className="h-6 w-6" />}
+              title="Universal Care Systems"
+              description="Ensures every community's essential needs are met through autonomous supply networks that transcend traditional markets."
             />
           </div>
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '200ms' }}>
             <FeatureCard
-              icon={<Link className="h-6 w-6" />}
-              title="Blockchain-Based Secure Transactions"
-              description="Smart contracts ensure corruption-proof supply chain agreements with end-to-end traceability and cryptographic security."
+              icon={<Globe className="h-6 w-6" />}
+              title="Borderless Cooperation"
+              description="Transparent global sharing protocols that dissolve artificial barriers between communities while respecting local autonomy."
             />
           </div>
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '300ms' }}>
             <FeatureCard
-              icon={<Plane className="h-6 w-6" />}
-              title="Autonomous & Alternative Delivery"
-              description="Drone-powered networks enable rapid transport while AI-coordinated self-driving convoys dynamically reroute in real time."
+              icon={<Sparkles className="h-6 w-6" />}
+              title="Post-Scarcity Logistics"
+              description="Advanced production and distribution systems that create abundance rather than managing scarcity."
             />
           </div>
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '400ms' }}>
             <FeatureCard
-              icon={<Store className="h-6 w-6" />}
-              title="Guardian-IO B2B/B2G Marketplace"
-              description="Directly connects businesses & NGOs with crisis regions for secure supply transactions while empowering local economies."
+              icon={<Leaf className="h-6 w-6" />}
+              title="Regenerative Resource Cycles"
+              description="Circular economy principles ensure that all materials flow in continuous cycles of use and renewal."
             />
           </div>
 
           <div className="feature-card opacity-0" style={{ transitionDelay: '500ms' }}>
             <FeatureCard
-              icon={<Shield className="h-6 w-6" />}
-              title="Ethical Trade System"
-              description="Smart contract-enforced ethical trade ensures compliance and transparency throughout the entire supply chain process."
+              icon={<Users className="h-6 w-6" />}
+              title="Democratic Commons Network"
+              description="Community-governed platforms where decisions about resource flows are made by those affected, not distant authorities."
             />
           </div>
         </div>
