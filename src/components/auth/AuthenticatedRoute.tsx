@@ -46,11 +46,13 @@ const AuthenticatedRoute = ({
   if (allowedRoles.length > 0 && user) {
     // Get user roles from metadata
     const userRoles = isDummyAuth && user
-      ? (user as DummyUser).publicMetadata.roles
-      : (clerkAuth.user?.publicMetadata?.roles as string[]) || [];
+      ? ((user as DummyUser).publicMetadata?.roles || [])
+      : ((clerkAuth.user?.publicMetadata?.roles as string[]) || []);
     
     // Check if user has at least one of the allowed roles
-    const hasPermission = allowedRoles.some(role => userRoles.includes(role));
+    const hasPermission = Array.isArray(userRoles) && userRoles.some(role => 
+      allowedRoles.includes(role)
+    );
     
     if (!hasPermission) {
       toast({

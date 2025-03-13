@@ -29,14 +29,14 @@ const Dashboard = () => {
   let userRoles: string[] = [];
   
   if (isDummyAuth && dummyAuth.user) {
-    userRoles = dummyAuth.user.publicMetadata.roles;
+    userRoles = dummyAuth.user.publicMetadata.roles || [];
   } else if (clerkAuth.user?.publicMetadata) {
     userRoles = (clerkAuth.user.publicMetadata.roles as string[]) || [];
   }
   
   // Default to "user" role if no roles are set
-  if (userRoles.length === 0) {
-    userRoles.push("user");
+  if (!userRoles || userRoles.length === 0) {
+    userRoles = ["user"];
   }
 
   // Get the appropriate user name based on auth method
@@ -50,18 +50,18 @@ const Dashboard = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold">
-              Welcome, {userName}
+              Dashboard
             </h1>
             <p className="text-muted-foreground">
-              Current role(s): {userRoles.join(", ")}
+              Welcome, {userName}
             </p>
             
             {isDummyAuth && (
               <Alert className="mt-4">
                 <Info className="h-4 w-4" />
-                <AlertTitle>Dummy Authentication Active</AlertTitle>
+                <AlertTitle>Demo Mode</AlertTitle>
                 <AlertDescription>
-                  You are currently using the dummy authentication system with test data.
+                  You are currently using a demo account with sample data.
                 </AlertDescription>
               </Alert>
             )}
@@ -71,19 +71,19 @@ const Dashboard = () => {
             <TabsList className="mb-6">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               {userRoles.includes("admin") && (
-                <TabsTrigger value="admin">Admin Panel</TabsTrigger>
+                <TabsTrigger value="admin">Admin</TabsTrigger>
               )}
               {userRoles.includes("business") && (
-                <TabsTrigger value="business">Business Operations</TabsTrigger>
+                <TabsTrigger value="business">Business</TabsTrigger>
               )}
               {userRoles.includes("ngo") && (
-                <TabsTrigger value="ngo">NGO Operations</TabsTrigger>
+                <TabsTrigger value="ngo">Organization</TabsTrigger>
               )}
               {userRoles.includes("distributor") && (
-                <TabsTrigger value="distributor">Distribution Center</TabsTrigger>
+                <TabsTrigger value="distributor">Distribution</TabsTrigger>
               )}
               {userRoles.includes("government") && (
-                <TabsTrigger value="government">Regulatory View</TabsTrigger>
+                <TabsTrigger value="government">Oversight</TabsTrigger>
               )}
             </TabsList>
             

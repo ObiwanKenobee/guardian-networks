@@ -26,46 +26,18 @@ const Login = () => {
     const user = dummyUsers.find(u => u.username === username && u.password === password);
     
     if (user) {
-      // Store the user info in localStorage to simulate being logged in
       localStorage.setItem("dummyUser", JSON.stringify(user));
       
-      // Show success toast
       toast({
-        title: "Welcome to the community",
-        description: `Hello, ${user.username}! Role: ${user.role}`,
+        title: "Login successful",
+        description: `Welcome back, ${user.username}`,
       });
       
-      // Redirect based on role
-      switch (user.role) {
-        case "SuperAdmin":
-          navigate("/dashboard");
-          break;
-        case "Supplier":
-          navigate("/dashboard");
-          break;
-        case "NGO":
-          navigate("/dashboard");
-          break;
-        case "LocalDistributor":
-          if (user.geoFence) {
-            // In a real app, we would check actual geolocation
-            toast({
-              description: `Local region recognized: ${user.geoFence}`,
-            });
-          }
-          navigate("/dashboard");
-          break;
-        case "Government":
-          navigate("/dashboard");
-          break;
-        default:
-          navigate("/dashboard");
-      }
+      navigate("/dashboard");
     } else {
-      // Show error toast
       toast({
-        title: "Access not recognized",
-        description: "Please check your credentials and try again",
+        title: "Login failed",
+        description: "Invalid credentials",
         variant: "destructive",
       });
     }
@@ -79,10 +51,6 @@ const Login = () => {
 
   // If already signed in (with Clerk), redirect to dashboard
   if (isSignedIn) {
-    toast({
-      title: "Already connected",
-      description: "Taking you to your community dashboard",
-    });
     navigate("/dashboard");
     return null;
   }
@@ -95,28 +63,27 @@ const Login = () => {
             <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-white font-bold text-xl">G</span>
             </div>
-            <span className="font-bold text-xl ml-2">Guardian-IO</span>
+            <span className="font-bold text-xl ml-2">Guardian</span>
           </div>
-          <h1 className="mt-6 text-2xl font-bold">Join Our Community</h1>
-          <p className="mt-2 text-muted-foreground">Connect to access your Guardian-IO community network</p>
+          <h1 className="mt-6 text-2xl font-bold">Sign In</h1>
+          <p className="mt-2 text-muted-foreground">Access your account</p>
         </div>
         
-        {/* Toggle between real and dummy auth */}
         <div className="flex justify-center mb-4">
           <Button 
             variant="outline"
             onClick={() => setShowDummyLogin(!showDummyLogin)}
             className="w-full"
           >
-            {showDummyLogin ? "Use Standard Connection" : "Use Community Access Profiles"}
+            {showDummyLogin ? "Use Standard Login" : "Use Demo Accounts"}
           </Button>
         </div>
         
         {showDummyLogin ? (
           <Card>
             <CardHeader>
-              <CardTitle>Community Access</CardTitle>
-              <CardDescription>Use test credentials for different community roles</CardDescription>
+              <CardTitle>Demo Access</CardTitle>
+              <CardDescription>Use test credentials to explore the platform</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleDummyLogin}>
@@ -126,14 +93,14 @@ const Login = () => {
                     <Input 
                       id="username"
                       type="text" 
-                      placeholder="Your community identifier"
+                      placeholder="Username"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Access Key</Label>
+                    <Label htmlFor="password">Password</Label>
                     <Input 
                       id="password"
                       type="password" 
@@ -143,7 +110,7 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                <Button type="submit" className="w-full mt-4">Connect</Button>
+                <Button type="submit" className="w-full mt-4">Sign In</Button>
               </form>
             </CardContent>
             <CardFooter className="flex flex-col items-start">
@@ -153,7 +120,7 @@ const Login = () => {
                 onClick={() => setShowCredentials(!showCredentials)}
                 className="text-sm text-muted-foreground mb-2"
               >
-                {showCredentials ? "Hide Access Details" : "Show Community Access Profiles"}
+                {showCredentials ? "Hide Credentials" : "Show Demo Accounts"}
               </Button>
               
               {showCredentials && (
@@ -163,7 +130,7 @@ const Login = () => {
                       <TableRow>
                         <TableHead>Role</TableHead>
                         <TableHead>Username</TableHead>
-                        <TableHead>Access Key</TableHead>
+                        <TableHead>Password</TableHead>
                         <TableHead></TableHead>
                       </TableRow>
                     </TableHeader>
